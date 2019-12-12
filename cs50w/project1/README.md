@@ -58,13 +58,13 @@ I've included the "requests" module in "requirements.txt", as it was not part of
 
 ## books
 
-id          sequence
-isbn        varchar(50) UNIQUE
-title       varchar(200)
-author      varchar(200)
-year        integer
-revtot      integer
-revcoumt    integer
+- id          sequence
+- isbn        varchar(50) UNIQUE
+- title       varchar(200)
+- author      varchar(200)
+- year        integer
+- revtot      integer
+- revcoumt    integer
 
 ### SQL DDL commands
 
