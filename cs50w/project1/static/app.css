@@ -1,0 +1,199 @@
+@media screen and (max-width: 559px) {
+
+  .eis-book1 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 40% 30% auto;
+    column-gap: 8px;
+  }
+  
+  .eis-book2 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 40% auto;
+    column-gap: 8px;
+  }
+
+  .eis-details {
+    display:grid;
+    width:100%;
+    grid-template-columns: 50% auto;
+    column-gap: 8px;
+  }
+
+  .eis-issue {
+    width:90%;
+    margin:auto 8px;
+  }
+
+  .eis-comments {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 560px) and (max-width: 760px) {
+
+  .eis-book1 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 35% 25% auto;
+    column-gap: 8px;
+  }
+  
+  .eis-book2 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 35% auto;
+    column-gap: 8px;
+  }
+
+  .eis-details {
+    display:grid;
+    width:100%;
+    grid-template-columns: 40% auto;
+    column-gap: 8px;
+  }
+
+  .eis-issue {
+    width:90%;
+    margin:auto 20px;
+  }
+
+  .eis-comments {
+    width: 90%;
+    margin:auto;
+  }
+  
+}
+
+@media (min-width: 761px) {
+
+  .eis-book1 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 30% 20% auto;
+    column-gap: 12px;
+  }
+  
+  .eis-book2 {
+    display:grid;
+    width:100%;
+    grid-template-columns: 30% auto;
+    column-gap: 12px;
+  }
+
+  .eis-details {
+    display:grid;
+    width:100%;
+    grid-template-columns: 40% auto;
+    column-gap: 12px;
+  }  
+  .eis-issue {
+    width:760px;
+    margin:auto;
+  }
+
+  .eis-comments {
+    width: 90%;
+    margin:auto;
+  }
+}
+
+.eis-root {
+  max-width: 960px;
+  width:100%;
+  margin: 0 auto;
+  font-family: Verdana, Georgia, sans-serif;
+  font-size: medium;
+}
+
+.eis-header {
+  display: grid;
+  margin: auto;
+  grid-template-columns: 48px auto 48px;
+}
+
+.eis-title {
+  color: darkgoldenrod;
+  text-align: center;
+}
+
+.eis-issue-title {
+  color: indianred;
+}
+
+.eis-issue-text {
+  color: darkgoldenrod;
+}
+
+.eis-icon {
+  width: 40px;
+  height: 40px;
+  margin:16px auto auto auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.eis-login {
+  width: 320px;
+  margin: 20px auto ;
+  text-align: center;
+  border: 1px solid lightgrey;
+}
+
+.eis-search {
+  width: 320px;
+  margin: 20px auto;
+  text-align: center;
+  border: 1px solid lightgrey;
+}
+
+.eis-logo {
+  width: 96px;
+  height:96px;
+  margin: 20px auto 0 auto;
+}
+
+a {
+  color: darkgoldenrod;
+  font-size: smaller;
+}
+
+.eis-social {
+  width: 120px;
+  height: 40px;
+  margin: 8px auto;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.eis-social-item {
+  margin: auto 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.eis-noresult {
+  width:100%;
+  text-align:center;
+}
+
+.eis-goto {
+  text-align: right;
+  margin: auto 12px auto auto;
+}
+
+.eis-rates {
+  color: darkgoldenrod;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.eis-rateit {
+  width:90%;
+  margin: 0 auto;
+  text-align:center;
+}
