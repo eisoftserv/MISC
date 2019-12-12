@@ -10,7 +10,7 @@
 		<img class="eis-logo" src="{{ url_for('static', filename='logo.png') }}">
 		<form method="post">
 			<p><input type="text" name="user" placeholder="username" maxlength="50" size="30"></p>
-			<p><input type="text" name="pwd" placeholder="password" maxlength="50" size="30"></p>
+			<p><input type="password" name="pwd" placeholder="password" maxlength="50" size="30"></p>
 			<p><button type="submit" formaction="{{ url_for(submit_page) }}">{{ submit_text }}</button></p>
 			<p><a href="{{ url_for(link_page) }}">{{ link_text }}</a></p>
 		</form>
