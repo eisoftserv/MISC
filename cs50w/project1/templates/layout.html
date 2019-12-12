@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1;">
+        <meta name="author" content="ella ilona stern">
+        <meta name="description" content="project1 for the cs50/2019 course">
+        <title>Book Reviews Corner</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    </head>
+    <body>
+        <div class="eis-root">
+
+			<div class="eis-header">
+				<div>
+					{% block go_there %}
+					{% endblock %}
+				</div>
+				<h2 class="eis-title">Book Reviews</h2>		
+				<div>
+					{% block manage_session %}
+					{% endblock %}
+				</div>	
+			</div>
+
+			<div>
+				{% block present_content %}
+				{% endblock %}
+			</div>
+
+	        <br />
+			<br />
+			
+	        <div class="eis-social">
+				<div>
+	                <a href="https://twitter.com/" alt="Twitter" target="_blank">
+	                    <img class="eis-social-item" src="{{ url_for('static', filename='twitter.png') }}">
+					</a>
+				</div>
+				<div>
+        	        <a href="https://www.blogger.com/" alt="Blogger" target="_blank">
+                	    <img class="eis-social-item" src="{{ url_for('static', filename='blogger.png') }}">
+					</a>
+				</div>
+			</div>
+			
+			<br />
+			
+		</div>
+    </body>
+</html>

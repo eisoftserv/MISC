@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block go_there %}{% endblock %}
+{% block manage_session %}<a href="{{ url_for('logout') }}"><img class="eis-icon" src="{{ url_for('static', filename='logout.png') }}"></a>{% endblock %}
+
+{% block present_content %}
+
+    <br />
+
+    <div class="eis-search">	
+		<h3 class="eis-title">Search for a book:</h3>
+		<form action="{{ url_for('search') }}" method="post">
+			<p><input type="text" name="isbn" value="{{ keys.isbn }}" placeholder="isbn" maxlength="20" size="30"></p>
+			<p><input type="text" name="title" value="{{ keys.title }}" placeholder="title"  maxlength="100" size="30"></p>
+			<p><input type="text" name="author" value="{{ keys.author }}" placeholder="author" maxlength="100" size="30"></p>
+			<p><input type="submit" value="Search"></p>
+		</form>
+    </div>
+
+    <div>
+	{% if results %}
+		<br />
+		<h3 class="eis-title">Search Results</h3>
+		<br />
+		{% for book in results %}
+			<div class="eis-book1">
+				<div><span>ISBN: </span><span>{{ book.isbn }}</span></div>
+				<div><span>Year: </span><span>{{ book.year }}</span></div>
+				<div class="eis-goto"><a href="{{url_for('bookpage', book_id=book.id|string)}}">Reviews</a></div>
+			</div>
+			<div class="eis-book2">
+				<div><p><span>Author: </span><span></span>{{ book.author }}</span></p></div>
+				<div><p><span> Title: </span><span>{{ book.title }}</span></p></div>
+			</div>
+			<hr>
+		{% endfor %}
+	{% else %}
+		{% if keys.results %}
+		<br />
+		<div class="eis-noresult"><p>The search has no results to show!</p></div>
+	    {% endif %}
+	{% endif %}
+    </div>
+
+    <br />
+
+{% endblock %}
