@@ -182,11 +182,9 @@ def client_join_room(data):
     clientChannel = data["room"]
     if (clientChannel is None or len(clientChannel)<2 or len(clientChannel)>channel_limit):
         mylog("Incorrect channel name (when joining): "+clientChannel)
-        emit("test", "422", "Incorrect channel name!")
         return
     if clientChannel not in channels:
         mylog("Channel not found (when joining): "+clientChannel)
-        emit("test", "404", "Channel not found!")
         return
     join_room(clientChannel)
     #mylog("Joined: " + clientChannel)
@@ -197,7 +195,6 @@ def client_leave_room(data):
     clientChannel = data["room"]
     if (clientChannel is None or len(clientChannel)<2 or len(clientChannel)>channel_limit):
         mylog("Incorrect channel name (when leaving): " + clientChannel)
-        emit("test", "422", "Incorrect channel name!")
         return
     leave_room(clientChannel)
     #mylog("Left: " + clientChannel)
