@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1;">
+        <meta name="author" content="ella ilona stern">
+        <meta name="description" content="project2 for the cs50/2019 course">
+        <title>eitext</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    </head>
+    <body>
+		<!-- page  -->
+        <div class="eis-root">
+
+			<div class="eis-input" id="show_signin">
+				<form>
+					<br />
+					<img class="eis-logo-input"  src="{{ url_for('static', filename='logo.png') }}">
+					<p>Please enter your screen name:</p>
+					<p><input class="eis-field" type="text" maxlength="50" size="30" id="name_signin" value=""></p>
+					<p class="eis-note">Note: in case you chose 'Cancel' you need to refresh the page.</p>
+					<br />
+					<div class="eis-yesno">
+						<input type="image" id="send_signin" class="eis-yesno-item" alt="Send" src="{{ url_for('static', filename='send.png') }}">
+						<input type="image" id="cancel_signin" class="eis-yesno-item" alt="Cancel" src="{{ url_for('static', filename='cancel.png') }}">
+					</div>
+					<br />
+				</form>
+			</div>
+
+        </div>
+
+		<script src="{{ url_for('static', filename='home.js') }}"></script>
+			
+	</body>
+	
+</html>
