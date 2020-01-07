@@ -1,0 +1,125 @@
+{% extends "orders/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+    <form id="eis_menu" method="GET">
+        {% csrf_token %}
+        <div class="eis-menuband">
+            <button id="logout_menu" class="eis-imgbutton" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="log out" src="{% static 'orders/logout.png' %}" /></button>
+            <img class="eis-logo" src="{% static 'orders/logo.png' %}">
+            <button id="orders_menu" class="eis-imgbutton"><img class="eis-pic" alt="orders" src="{% static 'orders/order.png' %}" /></button>
+            <button id="cart_menu" class="eis-imgbutton"><img class="eis-pic" alt="cart" src="{% static 'orders/cart.png' %}" /></button>
+        </div>
+    </form>
+
+    {% for pr in dlist %}
+        {% ifchanged %}<div class="eis-group" id="g{{ pr.gid}}">{{ pr.gname }}</div>{% endifchanged %}
+        
+        <div class="eis-prod">
+            {% ifchanged %}<div class="eis-prod-name" id="p{{ pr.gid }}_{{ pr.pid}}">{{ pr.pname }}</div>{% else %}<div></div>{% endifchanged %}
+            <div class="eis-prod-type" id="t{{ pr.pid }}_{{ pr.tid }}"> {{ pr.tname }}</div>
+            <div class="eis-prod-buy" data-vals="{{ pr.gid }}_{{ pr.pid }}_{{ pr.tid }}_{{ pr.parts }}_{{ pr.extras }}_{{ pr.price }}">${{ pr.price }}</div>
+        </div>
+        
+    {% endfor %}
+    <br />
+    <br />
+
+
+    <div id="prod_details" class="eis-float">
+
+        <div class="eis-yesno">
+            <input type="image" class="eis-yesno-item" id="prod_details_ok" alt="Ok" src="{% static 'orders/add.png' %}" >
+            <input type="image" class="eis-yesno-item" id="prod_details_cancel" alt="Cancel" src="{% static 'orders/cancel.png' %}" >
+        </div>
+
+        <br />
+
+        <div class="eis-duo">
+            <span class="eis-tl" id="prod_name"></span><span class="eis-qt" id="prod_price"></span>
+            <span class="eis-tl" id="prod_namex"></span><span class="eis-qt" id="prod_pricex"></span>
+        </div> 
+
+        <div class="eis-quatro">
+            <span class="eis-tr">Quantity:</span>
+            <input class="eis-qt" type="number" id="prod_quantity" max="9999">
+            <span class="eis-tr">Total:</span>
+            <span class="eis-qt" id="prod_total"></span>
+        </div>
+
+        <br />
+
+        <div id="prod_parts" class="eis-select-list">
+        {% for elem in dpart %}
+            <div class="eis-selecta" data-price="0.0" data-id="{{ elem.id }}" data-sel="n">{{ elem.name }}</div>
+        {% endfor %}
+        </div>
+
+        <div id="prod_extras" class="eis-select-list">
+            {% for elem in dextra %}
+            <div class="eis-selecta" data-price="{{ elem.price }}" data-id="{{ elem.id }}" data-sel="n">{{ elem.name }} ${{ elem.price }}</div>
+        {% endfor %}
+        </div>
+
+        <br />
+
+    </div>
+
+
+    <div id="cart_base" class="eis-float">
+        <div class="eis-yesno">
+            <input type="image" class="eis-yesno-item" id="cart_checkout" alt="Checkout" src="{% static 'orders/pay.png' %}" >
+            <input type="image" class="eis-yesno-item" id="cart_close" alt="Close" src="{% static 'orders/cancel.png' %}" >
+        </div>
+        <br />
+        <div class="eis-cart-head">
+            <span class="eis-cart-title">Your Cart and Total</span>
+            <span class="eis-cart-bigtotal" id="cart_bigtotal">Total</span>
+        </div>
+        <div id="cart_main">
+        </div>
+        <br />
+    </div>
+
+    
+    <div id="cart_confirm" class="eis-confirm">
+        <br />
+        <div class="eis-cart-head">
+            <span class="eis-cart-title">Please confirm your order:</span>
+            <span class="eis-cart-bigtotal" id="cart_confirm_total"></span>
+        </div>
+        <br />
+        <div class="eis-yesno">
+            <input type="image" class="eis-yesno-item" id="cart_send" alt="Send" src="{% static 'orders/send.png' %}" >
+            <input type="image" class="eis-yesno-item" id="cart_review" alt="Cancel" src="{% static 'orders/cancel.png' %}" >
+        </div>
+        <br />
+    </div>
+    
+
+    <div id="cart_wait" class="eis-confirm">
+        <br />
+        <div class="eis-cart-title"><span id="cart_message" class="eis-title"></span></div>
+        <br />
+        <input type="image" class="eis-pic" id="cart_tick" alt="Ok" src="{% static 'orders/tick.png' %}" >
+        <br />
+    </div>
+
+    <div id="order_pane" class="eis-float">
+        <br />
+        <div class="eis-title"><span>Your Orders</span></div>
+        <br />
+        <div id="order_main">
+            <div id="order_sub"></div>
+        </div>
+        <br />
+        <input type="image" class="eis-pic" id="order_close" alt="Ok" src="{% static 'orders/tick.png' %}" >
+        <br />
+    </div>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'orders/client.js' %}"></script>
+{% endblock %}
+

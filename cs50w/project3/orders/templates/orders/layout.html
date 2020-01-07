@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="ella ilona stern">
+        <meta name="description" content="project3 for the cs50/2019 course">
+        <title>My Pizza Shop</title>
+		<link rel="stylesheet" href="{% static 'orders/pizza.css' %}">
+    </head>
+    <body>
+        <div class="eis-root">
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        {% block js_block %}
+        {% endblock %}
+	</body>
+</html>
