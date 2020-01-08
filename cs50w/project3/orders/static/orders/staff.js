@@ -57,7 +57,7 @@ function manageNewStatus() {
     }
 } // end function
 
-// order list - client view
+// order list - staff view
 function paintOrderList(tbl) {
     const nodeMain = document.querySelector("#order_main");
     if (!nodeMain) return false;
@@ -140,7 +140,7 @@ function paintOrderList(tbl) {
     }
 } // end function
 
-// pulling data for the client's order list
+// pulling data for the order list
 function requestOrderList() {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
