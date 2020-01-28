@@ -1,0 +1,89 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back"><img class="eis-pic" alt="report" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <span></span>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila" id="page_title"><span>Study Materials Proposed By {{ gobuddy.name }}</span></div>
+<br />
+
+{% for elem in golist %}
+<div class="eis-dform" id="mx{{ gobuddy.id }}_{{ elem.id }}">
+    <div class="eis-su-title" id="st{{ gobuddy.id }}_{{ elem.id }}"><span>{{ elem.title }}</span></div>
+    <br />
+    <div class="eis-su-text">
+    {% if elem.published %}
+    <span>Year: </span><span id="sy{{ gobuddy.id }}_{{ elem.id }}">{{ elem.published }}</span>
+    {% else %}
+    <span id="sy{{ gobuddy.id }}_{{ elem.id }}"></span>
+    {% endif %}
+    {% if elem.author %}
+    <span> Author: </span><span id="sa{{ gobuddy.id }}_{{ elem.id }}">{{ elem.author }}</span>
+    {% else %}
+    <span id="sa{{ gobuddy.id }}_{{ elem.id }}"></span>
+    {% endif %}
+    </div>
+    <div class="eis-su-link">
+        <span>Url: </span>
+        <a id="sl{{ gobuddy.id }}_{{ elem.id }}" href="{{ elem.url }}" target="_blank">{{ elem.url }}</a>
+    </div>
+    {% if elem.text %}
+    <div>
+        <br />
+        <div class="eis-su-text"><span>Opinion: </span><span id="so{{ gobuddy.id }}_{{ elem.id }}">{{ elem.text }}</span></div>
+    </div>
+    {% else %}
+    <div id="so{{ gobuddy.id }}_{{ elem.id }}"></div>
+    {% endif %}
+    <div class="eis-su-by">
+        <br />
+        <span>Theme: </span>
+        <span class="theme-to eis-item-nolink" data-id="{{ elem.subject.id }}">{{ elem.subject.name }}</span>
+        <span> Platform: </span>
+        <span class="platform-to eis-item-nolink" data-id="{{ elem.domain.id }}">{{ elem.domain.url }}</span>
+        <span> Added on: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }}</span>
+    </div>
+    <br />
+    <div class="eis-su-text">
+        <span>Status: </span>
+        {% if elem.status == 1 %}
+        <span class="eis-item-nolinkgr">{{ elem.get_status_display }}</span>
+        {% else %}
+        <span class="eis-item-nolinkor">{{ elem.get_status_display }}</span>
+        {% endif %}
+    </div>   
+</div>
+{% empty %}
+<br />
+<br />
+<span>There are not yet study materials proposed by {{ gobuddy.name }}</span>
+{% endfor %}
+
+<br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // navigate to profile info
+    document.querySelector("#menu_back").onclick = function() {
+        window.history.go(-1);
+        return false;
+    };
+    myclient.setTotop();
+});    
+</script>
+{% endblock %}
+

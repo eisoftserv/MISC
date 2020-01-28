@@ -1,0 +1,68 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form >
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'staffboard' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila" id="page_title"><span>Items Reported by Members</span></div>
+<br />
+
+<div id="page_list">
+    {% for elem in flags %}
+    <div class="eis-dform" id="fx{{ elem.id }}">
+        <div class="eis-su-text">
+        <p id="ft{{ elem.id }}">{{ elem.text }}</p>
+        </div>
+        <div>
+            <span class="item-to eis-item-link" id="fi{{ elem.id }}" data-type="{{ elem.itemtype }}" data-id="{{ elem.itemid }}">Review this {{ elem.get_itemtype_display }} </span>
+            <span> Reported by: </span>
+            <a class="member-to eis-item-link" href="/profileinfo/{{ elem.sender.id }}/" target="_blank">{{ elem.sender.name }}</a>
+        </div>   
+        <div class="eis-su-by">
+            <span> Added on: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }} {{ elem.stamp|slice:"11:16" }}</span>
+        </div>
+        <div>
+            <span> Status: </span>
+            <span class="eis-item-nolinkgr">{{ elem.get_status_display }}</span>
+        </div>   
+    </div>
+    {% empty %}
+    <br />
+    <br />
+    <span>Currently there are no reported items.</span>
+    {% endfor %}
+    </div>
+    
+    <br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // go to reported item
+        const objt = document.querySelectorAll(".item-to");
+        if (objt) {
+            objt.forEach(elem => { 
+                elem.onclick = function() {
+                    const obj = document.querySelector("#" + this.id);
+                    location.href = "reporteditem/" + obj.dataset.type + "/" + this.id.substring(2) + "/" + obj.dataset.id + "/";
+                    return false;
+                };
+            });
+        }
+        myclient.setTotop();
+    });    
+    </script>   
+{% endblock %}

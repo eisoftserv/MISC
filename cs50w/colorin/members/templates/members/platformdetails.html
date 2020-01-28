@@ -1,0 +1,104 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'platformlist' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila" id="page_title" data-id="{{ pid }}"><span>Platform: {{ url }} </span></div>
+<br />
+
+<div id="page_list">
+    {% for elem in sugs %}
+    <div class="eis-dform" id="px{{ pid }}_{{ elem.id }}">
+        <div class="eis-su-title" id="st{{ pid }}_{{ elem.id }}"><span>{{ elem.title }}</span></div>
+        <br />
+        <div class="eis-su-text">
+        {% if elem.published %}
+        <span>Year: </span><span id="sy{{ pid }}_{{ elem.id }}">{{ elem.published }}</span>
+        {% else %}
+        <span id="sy{{ pid }}_{{ elem.id }}"></span>
+        {% endif %}
+        {% if elem.author %}
+        <span> Author: </span><span id="sa{{ pid }}_{{ elem.id }}">{{ elem.author }}</span>
+        {% else %}
+        <span id="sa{{ pid }}_{{ elem.id }}"></span>
+        {% endif %}
+        </div>
+        <div class="eis-su-link">
+            <span>Url: </span>
+            <a id="sl{{ pid }}_{{ elem.id }}" href="{{ elem.url }}" target="_blank">{{ elem.url }}</a>
+        </div>
+        {% if elem.text %}
+            <div>
+                <br />
+                <div class="eis-su-text"><span>Opinion: </span><span id="so{{ pid }}_{{ elem.id }}">{{ elem.text }}</span></div>
+            </div>
+        {% else %}
+            <div id="so{{ pid }}_{{ elem.id }}"></div>
+        {% endif %}
+        <div class="eis-su-by">
+            <br />
+            <span>Theme: </span>
+            <a class="theme-to eis-item-link" href="/themedetails/{{ elem.subject.id }}/">{{ elem.subject.name }}</a>
+            <span> Added by: </span>
+            <a class="member-to eis-item-link" href="/memberdetails/{{ elem.sender.id }}/">{{ elem.sender.name }}</a>
+            <span> on: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }}</span>
+        </div>   
+        <div>
+            {% if elem.sender.id != mid %}
+            <span class="uni-flag eis-uni" data-id="{{ elem.id }}">&#x1f56d;</span>
+            {% endif %}
+            <span class="uni-comm eis-uni" data-oid="{{ pid }}" data-id="{{ elem.id }}">&#x1f5e9;</span>
+        </div>
+    </div>
+    {% empty %}
+    <br />
+    <br />
+    <span>There are not yet suggestions for this platform.</span>
+    {% endfor %}
+    </div>
+    
+    <br />
+
+{% endblock %}
+{% block js_block %}
+<script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function() {
+    // flag suggestion
+    const objf = document.querySelectorAll(".uni-flag");
+    if (objf) {
+        objf.forEach(elem => { 
+            elem.onclick = function() {
+                flaggerInit(this.dataset.id, "suggestion", "study material");
+                return false;
+            };
+        });
+    }
+    // go to comments on current suggestion
+    const objc = document.querySelectorAll(".uni-comm");
+    if (objc) {
+        objc.forEach(elem => { 
+            elem.onclick = function() {
+                location.href = "/commentlist/p/" + this.dataset.oid + "/" + this.dataset.id + "/";               
+                return false;
+            };
+        });
+    }    
+    myclient.setTotop();
+});        
+
+</script>
+{% endblock %}

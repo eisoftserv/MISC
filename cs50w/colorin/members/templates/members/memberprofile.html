@@ -1,0 +1,73 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+	<br />
+    <div class="eis-form">
+		<form method="post">
+			{% csrf_token %}
+			<div class="eis-menuband">
+				{% if withlist %}
+				<button class="eis-imgbutton" id="menu_back"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+				{% else %}
+				<span></span>
+				{% endif %}
+				<span></span>
+				<img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+				<span></span>
+				<span></span>
+			</div>				
+			<br />
+			<div class="eis-title-blue"><span>Your Public Profile</span></div>
+			<div class="eis-red"><span>{{ message }}</span></div>	
+			<br />
+			<div class="eis-label"><span>Name (mandatory):</span></div>
+			<input class="eis-field" type="text" name="name" maxlength="80" value="{{ name }}">
+			<div class="eis-label"><span>Location (mandatory):</span></div>
+			<input class="eis-field" type="text" name="location" maxlength="80" value="{{ location }}">
+			<div class="eis-label"><span>Social profile link:</span></div>
+			<input type="url" class="eis-linkarea" name="social" maxlength="160" value="{{ social }}">
+			<div class="eis-label"><span>About (present yourself):</span></div>
+			<textarea class="eis-textarea" cols="3" name="about" maxlength="240">{{ about }}</textarea>
+			<br />
+			<div class="eis-buttons">
+				<button class="eis-button" id="profile_ok" formaction="{% url 'memberprofile' %}">Update</button>
+				<button class="eis-butred" id="profile_cancel" formaction="{% url 'cancel_memberprofile' %}">Close</button>
+			</div>
+			<br />
+		</form>
+	</div>
+
+	<br />
+	<br />
+
+	{% if withlist %}
+	<div class="eis-title-lila"><span>Social Networks </span><span class="eis-uni-plus" id="menu_network"> &#x002b;</span></div>
+	<br />
+	<div class="eis-theme-list">
+	{% for soc in pubsocs %}
+	<div class="eis-item-nolink">
+		<div id="so_{{ soc.id }}" class="eis-network-link"><span>{{ soc.url }}</span></div>
+	</div>
+	{% empty %}
+	<p>No results to show.</p>
+	{% endfor %}
+	</div>
+	{% endif %}
+
+	<br />
+
+	<div id="new_network" class="eis-float">
+		<div class="eis-title-blue">Propose a Social Network</div>
+		<br />
+		<input type="url" class="eis-linkarea" id="new_network_name" name="url" value="https://" maxlength="80">
+		<div class="eis-buttons">
+			<button class="eis-button" id="new_network_ok">Submit</button>
+			<button class="eis-butred" id="new_network_clear">Close</button>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'members/memberprofile.js' %}"></script>
+{% endblock %}

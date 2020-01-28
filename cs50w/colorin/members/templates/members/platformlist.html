@@ -1,0 +1,52 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form >
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'memberboard' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<div id="section_plt">
+<br />
+<div class="eis-title-lila">
+    <span class="eis-uni-plus" id="menu_flip"> &#x26ed;</span>
+    <span> Platforms </span>
+    <span class="eis-uni-plus" id="menu_plt"> &#x002b;</span>
+</div>
+<br />
+<div class="eis-theme-list">
+{% for plt in pubplts %}
+<div class="eis-item-link">
+    <div id="pl_{{ plt.id }}" class="eis-platform-link"><span>{{ plt.url }}</span></div>
+</div>
+{% empty %}
+<p>No results to show.</p>
+{% endfor %}
+</div>
+</div>
+
+<br />
+
+<div id="new_plt" class="eis-float">
+    <div class="eis-title-blue">Propose a Platform</div>
+    <br />
+    <input type="url" class="eis-linkarea" id="new_plt_name" name="url" value="https://" maxlength="80">
+    <div class="eis-buttons">
+        <button class="eis-button" id="new_plt_ok">Submit</button>
+        <button class="eis-butred" id="new_plt_clear">Close</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'members/platformlist.js' %}"></script>
+{% endblock %}

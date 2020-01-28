@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Ella Ilona Stern">
+        <meta name="description" content="final project for the cs50w/2020 course">
+        <title>Colorin</title>
+		<link rel="stylesheet" href="{% static 'members/site.css' %}">
+    </head>
+    <body>
+        <div class="eis-root">
+            <div id="page_top"></div>
+            {% block body_block %}
+            {% endblock %}
+            <div id="page_bottom" class="eis-toright">
+                <button class="eis-imgbutton"><img class="eis-totop" alt="up" src="{% static 'members/up.png' %}" /></button>
+                <br />
+            </div>               
+
+            <div id="mess_wait" class="eis-confirm">
+                <br />
+                <div class="eis-cart-title"><span id="mess_message" class="eis-title"></span></div>
+                <div class="eis-butick">
+                <input type="button" class="eis-button" id="mess_tick" value="Okay">
+                </div>
+            </div>   
+                    
+            <div id="delitem_wait" class="eis-confirm">
+                <br />
+                <div class="eis-cart-title"><span id="delitem_message" class="eis-title"></span></div>
+                <div class="eis-buttons">
+                    <button class="eis-button" id="delitem_yes" data-val="" data-radix="" data-type="">Proceed</button>
+                    <button class="eis-butred" id="delitem_no">Cancel</button>
+                </div>
+            </div>   
+                  
+            <div id="flagger_edit" class="eis-float">
+                <div class="eis-title-blue" id="flagger_operation" data-id="" data-type=""></div>
+                <br />
+                <textarea class="eis-textarea" cols="3" name="text" maxlength="240" id="flagger_text"></textarea>
+            
+                <div class="eis-buttons">
+                    <button class="eis-button" id="flagger_ok">Proceed</button>
+                    <button class="eis-butred" id="flagger_cancel">Cancel</button>
+                </div>
+            </div>
+                  
+            <div id="prime_edit" class="eis-float">
+                <div class="eis-title-blue" id="prime_operation" data-re="" data-toid=""></div>
+                <br />
+                <textarea class="eis-textarea" cols="3" name="text" maxlength="240" id="prime_text"></textarea>
+            
+                <div class="eis-buttons">
+                    <button class="eis-button" id="prime_ok">Submit</button>
+                    <button class="eis-butred" id="prime_cancel">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="{% static 'members/layout.js' %}"></script>
+
+        {% block js_block %}{% endblock %}
+
+	</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_report" formaction="{% url 'staffreport' %}"><img class="eis-pic" alt="report" src="{% static 'members/flag.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila">Proposed Themes</div>
+<br />
+<div class="eis-theme-list">
+{% for theme in prithemes %}
+<div class="eis-item-link">
+    <div id="th{{ theme.id }}" class="eis-theme-link" data-status="y"><span>{{ theme.name }}</span></div>
+</div>
+{% empty %}
+<p>No results to show.</p>
+{% endfor %}
+</div>
+
+<br />
+<div class="eis-title-lila">Proposed Platforms</div>
+<br />
+<div class="eis-theme-list">
+{% for plt in priplts %}
+<div class="eis-item-link">
+    <div id="pl{{ plt.id }}" class="eis-plt-link" data-status="y"><span>https://{{ plt.url }}</span></div>
+</div>
+{% empty %}
+<p>No results to show.</p>
+{% endfor %}
+</div>
+
+<br />
+<div class="eis-title-lila">Proposed Social Networks</div>
+<br />
+<div class="eis-theme-list">
+{% for soc in prisocs %}
+<div class="eis-item-link">
+    <div id="ne{{ soc.id }}" class="eis-network-link" data-status="y"><span>https://{{ soc.url }}</span></div>
+</div>
+{% empty %}
+<p>No results to show.</p>
+{% endfor %}
+</div>
+
+<div id="new_tri" class="eis-float">
+    <div class="eis-title-blue" id="new_tri_title"></div>
+    <br />
+    <input class="eis-field" type="text" name="name" maxlength="80" value="" data-id="" data-type="" id="new_tri_name">
+    <div class="eis-buttons">
+        <button class="eis-button" id="new_tri_approve">Publish</button>
+        <button class="eis-butar" id="new_tri_archive">Archive</button>
+        <button class="eis-butred" id="new_tri_close">Close</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'members/staffboard.js' %}"></script>
+{% endblock %}

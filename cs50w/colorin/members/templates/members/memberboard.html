@@ -1,0 +1,52 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_envelope" formaction="{% url 'incominglist' %}"><img class="eis-pic" alt="mail" src="{% static 'members/envelope.png' %}" /></button>
+        <button class="eis-imgbutton" id="menu_profile" formaction="{% url 'memberprofile' %}"><img class="eis-pic" alt="profile" src="{% static 'members/member.png' %}" /></button>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<div id="section_theme">
+<br />
+<div class="eis-title-lila">
+    <span class="eis-uni-plus" id="menu_flip"> &#x26ed;</span>
+    <span> Themes </span>
+    <span class="eis-uni-plus" id="menu_add"> &#x002b;</span>
+</div>
+<br />
+<div class="eis-theme-list">
+{% for theme in pubthemes %}
+<div class="eis-item-link">
+    <div id="th_{{ theme.id }}" class="eis-theme-link"><span>{{ theme.name }}</span></div>
+</div>
+{% empty %}
+<p>No results to show.</p>
+{% endfor %}
+</div>
+</div>
+
+<br />
+
+<div id="new_theme" class="eis-float">
+    <div class="eis-title-blue">Propose a Theme</div>
+    <br />
+    <input class="eis-field" type="text" name="name" maxlength="80" value="" id="new_theme_name">
+    <div class="eis-buttons">
+        <button class="eis-button" id="new_theme_ok">Submit</button>
+        <button class="eis-butred" id="new_theme_clear">Close</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'members/memberboard.js' %}"></script>
+{% endblock %}

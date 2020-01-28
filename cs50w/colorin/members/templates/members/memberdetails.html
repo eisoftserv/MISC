@@ -1,0 +1,104 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'memberboard' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<div class="eis-form">
+        <div class="eis-title-blue"><span>Member Profile</span></div>
+        <br />
+        <div class="eis-label"><span>Name:</span></div>
+        <input class="eis-field" id="page_about" type="text" name="name" readonly value="{{ gobuddy.name }}" data-id="{{ goid }}">
+        <div class="eis-label"><span>Location:</span></div>
+        <input class="eis-field" type="text" name="location" readonly value="{{ gobuddy.location }}">
+        {% if gobuddy.social %}
+        <div class="eis-label"><span>Social profile link:</span></div>
+        <input type="url" class="eis-linkarea" name="social" readonly value="{{ gobuddy.social }}">
+        {% endif %}
+        {% if gobuddy.about %}
+        <div class="eis-label"><span>About:</span></div>
+        <textarea class="eis-textarea" cols="3" readonly name="about">{{ gobuddy.about }}</textarea>
+        {% endif %}
+        <div class="eis-label eis-su-by">
+            <br />
+            <span>Member since: {{ gobuddy.stamp|slice:"5:7" }}-{{ gobuddy.stamp|slice:"8:10" }}-{{ gobuddy.stamp|slice:"2:4" }} {{ gobuddy.stamp|slice:"11:16" }}</span>
+        </div>
+        <br />
+        {% if meid != goid %}
+        <div class="eis-su-text">
+            <span class="uni-flax eis-uni" data-id="{{ goid }}">&#x1f56d;</span>
+            <span class="uni-prime eis-uni">&#x1f582;</span>
+        </div>
+        {% endif %}    
+</div>
+
+<br />
+<div class="eis-title-lila" id="page_title"><span>Study Materials Proposed By This Member</span></div>
+<br />
+
+{% for elem in golist %}
+<div class="eis-dform" id="mx{{ goid }}_{{ elem.id }}">
+    <div class="eis-su-title" id="st{{ goid }}_{{ elem.id }}"><span>{{ elem.title }}</span></div>
+    <br />
+    <div class="eis-su-text">
+    {% if elem.published %}
+    <span>Year: </span><span id="sy{{ goid }}_{{ elem.id }}">{{ elem.published }}</span>
+    {% else %}
+    <span id="sy{{ goid }}_{{ elem.id }}"></span>
+    {% endif %}
+    {% if elem.author %}
+    <span> Author: </span><span id="sa{{ goid }}_{{ elem.id }}">{{ elem.author }}</span>
+    {% else %}
+    <span id="sa{{ goid }}_{{ elem.id }}"></span>
+    {% endif %}
+    </div>
+    <div class="eis-su-link">
+        <span>Url: </span>
+        <a id="sl{{ goid }}_{{ elem.id }}" href="{{ elem.url }}" target="_blank">{{ elem.url }}</a>
+    </div>
+    {% if elem.text %}
+    <div>
+        <br />
+        <div class="eis-su-text"><span>Opinion: </span><span id="so{{ goid }}_{{ elem.id }}">{{ elem.text }}</span></div>
+    </div>
+    {% else %}
+    <div id="so{{ goid }}_{{ elem.id }}"></div>
+    {% endif %}
+    <div class="eis-su-by">
+        <br >
+        <span>Theme: </span>
+        <a class="theme-to eis-item-link" href="/themedetails/{{ elem.subject.id }}/">{{ elem.subject.name }}</a>
+        <span> Platform: </span>
+        <a class="platform-to eis-item-link" href="/platformdetails/{{ elem.domain.id }}/">{{ elem.domain.url }}</a>
+        <span> Added on: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }}</span>
+    </div>   
+    <div>
+    {% if elem.sender.id != mid %}
+    <span class="uni-flag eis-uni" data-id="{{ elem.id }}">&#x1f56d;</span>
+    {% endif %}
+    <span class="uni-comm eis-uni" data-oid="{{ goid }}" data-id="{{ elem.id }}">&#x1f5e9;</span>
+    </div>
+</div>
+{% empty %}
+<br />
+<br />
+<span>There are not yet study materials proposed by {{ name }}</span>
+{% endfor %}
+
+<br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript" src="{% static 'members/memberdetails.js' %}"></script>
+{% endblock %}

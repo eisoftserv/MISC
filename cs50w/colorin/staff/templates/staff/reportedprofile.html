@@ -1,0 +1,82 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'staffreport' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <span></span>
+    </div>
+</form>
+
+<div class="eis-form">
+        <div class="eis-title-blue" id="member_data" data-ctype="{{ ctype }}" data-item="{{ gobuddy.id }}" data-flag="{{ fid }}" ><span>Member Profile</span></div>
+        <br />
+        <div class="eis-label"><span>Name:</span></div>
+        <input class="eis-field" id="page_about" type="text" name="name" readonly value="{{ gobuddy.name }}" data-id="{{ gobuddy.id }}">
+        <div class="eis-label"><span>Location:</span></div>
+        <input class="eis-field" type="text" name="location" readonly value="{{ gobuddy.location }}">
+        {% if gobuddy.social %}
+        <div class="eis-label"><span>Social profile link:</span></div>
+        <input type="url" class="eis-linkarea" name="social" readonly value="{{ gobuddy.social }}">
+        {% endif %}
+        {% if gobuddy.about %}
+        <div class="eis-label"><span>About:</span></div>
+        <textarea class="eis-textarea" cols="3" readonly name="about">{{ gobuddy.about }}</textarea>
+        {% endif %}
+        <div class="eis-label eis-su-by">
+            <br />
+            <span>Member since: {{ gobuddy.stamp|slice:"5:7" }}-{{ gobuddy.stamp|slice:"8:10" }}-{{ gobuddy.stamp|slice:"2:4" }} {{ gobuddy.stamp|slice:"11:16" }}</span>
+        </div>
+        <div class="eis-label eis-su-text">
+            <span>Status: </span>
+            {% if gobuddy.status == 2 %}
+            <span class="eis-item-nolinkgr">{{ gobuddy.get_status_display }}</span>
+            {% else %}
+            <span class="eis-item-nolinkor">{{ gobuddy.get_status_display }}</span>
+            {% endif %}
+
+            <span> Check member activity </span>
+            <a class="member-to eis-item-link" href="/profileinfo/{{ gobuddy.id }}" target="_blank" data-id="{{ gobuddy.id }}">Here</a>
+            <br>
+        </div>
+
+        <br />
+        <p class="eis-label">Notes: ignored reports are archived; hidden users have to update their member profiles; use the "back" button in case you prefer to process this user profile later.</p>
+    
+        <div class="eis-buttons">
+            <button class="eis-button" id="member_ignore">Ignore</button>
+            <button class="eis-butred" id="member_hide">Hide</button>
+        </div>
+        <br />
+    
+</div>
+
+<br>
+
+{% endblock %}
+
+{% block js_block %}
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // ignore
+        document.querySelector("#member_ignore").onclick = function() {
+            const obj = document.querySelector("#member_data");
+            location.href = "/resolvereported/" + obj.dataset.ctype + "/" + obj.dataset.flag + "/0";
+            return false;
+        };
+        // archive
+        document.querySelector("#member_hide").onclick = function() {
+            const obj = document.querySelector("#member_data");
+            location.href = "/resolvereported/" + obj.dataset.ctype + "/" + obj.dataset.flag + "/" + obj.dataset.item;
+            return false;
+        }; 
+        myclient.setTotop();
+    });       
+    </script>
+{% endblock %}

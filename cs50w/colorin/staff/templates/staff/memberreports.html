@@ -1,0 +1,59 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back"><img class="eis-pic" alt="report" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <span></span>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila" id="page_title"><span>Reports Added by By {{ gobuddy.name }}</span></div>
+<br />
+
+{% for elem in golist %}
+<div class="eis-dform">
+    <div class="eis-su-text">
+        <p>{{ elem.text }}</p>
+    </div>
+    <div class="eis-su-by">
+        <span>At: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }} {{ elem.stamp|slice:"11:16" }}</span>
+    </div>
+    <div class="eis-su-text">
+        <span>Status: </span>
+        {% if elem.status == 3 %}
+        <span class="eis-item-nolinkor">{{ elem.get_status_display }}</span>
+        {% else %}
+        <span class="eis-item-nolinkgr">{{ elem.get_status_display }}</span>
+        {% endif %}
+    </div>   
+</div>
+{% empty %}
+<br />
+<br />
+<span>There are not yet reports added by {{ gobuddy.name }}</span>
+{% endfor %}
+
+<br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // navigate to profile info
+    document.querySelector("#menu_back").onclick = function() {
+        window.history.go(-1);
+        return false;
+    };
+    myclient.setTotop();
+});    
+</script>
+{% endblock %}

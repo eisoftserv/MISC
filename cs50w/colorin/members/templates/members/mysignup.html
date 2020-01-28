@@ -1,0 +1,34 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+	<br />
+	<br />
+
+    <div class="eis-login">
+		<br />
+		<img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+		<div class="eis-red">
+			<p>{{ message }}</p>
+			</div>	
+		<form action="{% url 'mysignup' %}" method="post">
+			{% csrf_token %}
+			<p><input class="eis-field" type="text" name="username" placeholder="user name" maxlength="50" size="30"></p>
+			<p><input class="eis-field" type="email" name="email" placeholder="your email" maxlength="50" size="30"></p>
+			<p><input class="eis-field" type="password" name="password" placeholder="your password" maxlength="50" size="30"></p>
+			<p><input class="eis-field" type="password" name="passdupe" placeholder="repeat password" maxlength="50" size="30"></p>
+			<br />
+			<button class="eis-button" formaction="{% url 'mysignup' %}">Sign Up</button>
+			<br />
+			<p><a href="{% url 'mylogin' %}">Returning user? Log in!</a></p>
+		</form>
+		<br />
+	</div>
+
+{% endblock %}
+{% block js_block %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {   
+		myclient.setTotop();
+	});
+</script>
+{% endblock %}

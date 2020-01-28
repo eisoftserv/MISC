@@ -1,0 +1,48 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'memberboard' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <button class="eis-imgbutton" id="menu_in" formaction="{% url 'incominglist' %}"><img class="eis-pic" alt="in" src="{% static 'members/inma.png' %}" /></button>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <button class="eis-imgbutton" id="menu_out" formaction="{% url 'outgoinglist' %}"><img class="eis-pic" alt="out" src="{% static 'members/outma.png' %}" /></button>
+        <button class="eis-imgbutton" id="menu_logout" formaction="{% url 'mylogout' %}"><img class="eis-pic" alt="out" src="{% static 'members/logout.png' %}" /></button>
+    </div>
+</form>
+
+<br />
+<div class="eis-title-lila" id="page_title"><span>Outgoing Messages</span></div>
+<br />
+
+{% for elem in outs %}
+<div class="eis-dform" id="cx{{ sid }}_{{ elem.id }}">
+    <div>
+        <span>To: </span>
+        <span class="member-to eis-item-nolink" id="ou{{ elem.id }}" data-id="{{ elem.recipient.id }}">{{ elem.recipient.name }}</span>
+        <span> at: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }} {{ elem.stamp|slice:"11:16" }}</span>
+    </div>
+    <div class="eis-su-text">
+    <p>{{ elem.text }}</p>
+    </div>
+</div>
+{% empty %}
+<br />
+<br />
+<span>You don't have outgoing messages.</span>
+{% endfor %}
+
+<br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {   
+    myclient.setTotop();
+});
+</script>
+{% endblock %}

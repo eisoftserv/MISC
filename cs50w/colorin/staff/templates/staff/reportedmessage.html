@@ -1,0 +1,70 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <button class="eis-imgbutton" id="menu_back" formaction="{% url 'staffreport' %}"><img class="eis-pic" alt="back" src="{% static 'members/back.png' %}" /></button>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <span></span>
+    </div>
+</form>
+
+<br />
+<div class="eis-dform">
+    <div class="eis-title-blue" id="prime_data" data-ctype="{{ ctype }}" data-item="{{ elem.id }}" data-flag="{{ fid }}">Reported Private Message</div>
+    <br />
+    <div>
+        <span>From: </span>
+        <a class="member-to eis-item-link" href="/profileinfo/{{ elem.sender.id }}/" target="_blank">{{ elem.sender.name }}</a>
+        <span> on: {{ elem.stamp|slice:"5:7" }}-{{ elem.stamp|slice:"8:10" }}-{{ elem.stamp|slice:"2:4" }} {{ elem.stamp|slice:"11:16" }}</span>
+    </div>
+    <div class="eis-su-text">
+    <p>{{ elem.text }}</p>
+    </div>
+    <div class="eis-su-text">
+        <br >        
+        <span>Status: </span>
+        {% if elem.status == 1 %}
+        <span class="eis-item-nolinkgr">{{ elem.get_status_display }}</span>
+        {% else %}
+        <span class="eis-item-nolinkor">{{ elem.get_status_display }}</span>
+        {% endif %}
+    </div>
+    <br />
+    <p class="eis-label">Notes: ignored reports are archived; hidden private messages cannot be set visible anymore; use the "back" button in case you prefer to process this private message later.</p>
+
+    <div class="eis-buttons">
+        <button class="eis-button" id="prime_ignore">Ignore</button>
+        <button class="eis-butred" id="prime_archive">Hide</button>
+    </div>
+</div>
+
+<br />
+<br />
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // ignore
+        document.querySelector("#prime_ignore").onclick = function() {
+            const obj = document.querySelector("#prime_data");
+            location.href = "/resolvereported/" + obj.dataset.ctype + "/" + obj.dataset.flag + "/0";
+            return false;
+        };
+        // archive
+        document.querySelector("#prime_archive").onclick = function() {
+            const obj = document.querySelector("#prime_data");
+            location.href = "/resolvereported/" + obj.dataset.ctype + "/" + obj.dataset.flag + "/" + obj.dataset.item;
+            return false;
+        }; 
+        myclient.setTotop();      
+    });        
+    </script>   
+{% endblock %}

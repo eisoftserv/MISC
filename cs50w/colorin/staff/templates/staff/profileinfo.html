@@ -1,0 +1,87 @@
+{% extends "members/layout.html" %}
+{% load static %}
+{% block body_block %}
+
+<br />
+<form>
+    {% csrf_token %}
+    <div class="eis-menuband">
+        <span></span>
+        <span></span>
+        <img class="eis-logo-small" src="{% static 'members/logo40.png' %}">
+        <span></span>
+        <button class="eis-imgbutton" id="menu_cancel"><img class="eis-pic" alt="report" src="{% static 'members/cancel.png' %}" /></button>
+    </div>
+</form>
+
+<div class="eis-form">
+        <div class="eis-title-blue"><span>Member Profile</span></div>
+        <br />
+        <div class="eis-label"><span>Name:</span></div>
+        <input class="eis-field" id="page_about" type="text" name="name" readonly value="{{ gobuddy.name }}" data-id="{{ gobuddy.id }}">
+        <div class="eis-label"><span>Location:</span></div>
+        <input class="eis-field" type="text" name="location" readonly value="{{ gobuddy.location }}">
+        {% if gobuddy.social %}
+        <div class="eis-label"><span>Social profile link:</span></div>
+        <input type="url" class="eis-linkarea" name="social" readonly value="{{ gobuddy.social }}">
+        {% endif %}
+        {% if gobuddy.about %}
+        <div class="eis-label"><span>About:</span></div>
+        <textarea class="eis-textarea" cols="3" readonly name="about">{{ gobuddy.about }}</textarea>
+        {% endif %}
+        <div class="eis-label eis-su-by">
+            <br />
+            <span>Member since: {{ gobuddy.stamp|slice:"5:7" }}-{{ gobuddy.stamp|slice:"8:10" }}-{{ gobuddy.stamp|slice:"2:4" }} {{ gobuddy.stamp|slice:"11:16" }}</span>
+        </div>
+        <div class="eis-label eis-su-text">
+            <br />
+            <span>Status: </span>
+            {% if gobuddy.status == 2 %}
+            <span class="eis-item-nolinkgr">{{ gobuddy.get_status_display }}</span>
+            {% else %}
+            <span class="eis-item-nolinkor">{{ gobuddy.get_status_display }}</span>
+            {% endif %}
+            <br>
+        </div>
+</div>
+
+<div>
+    <br>
+    <br>
+    <div class="eis-su-text">
+        <span>Show </span>
+        <a class="eis-item-link" href="/memberinfo/1/{{ gobuddy.id }}/">Study Materials</a>
+        <span> proposed</span>
+    </div>
+    <br>
+    <br>
+    <div class="eis-su-text">
+        <span>Show </span>
+        <a class="comments-to eis-item-link" href="/memberinfo/2/{{ gobuddy.id }}/">Comments</a>
+        <span> added</span>
+    </div>
+    <br>
+    <br>
+    <div class="eis-su-text">
+        <span>Show </span>
+        <a class="reports-to eis-item-link" href="/memberinfo/5/{{ gobuddy.id }}/">Reports</a>
+        <span> initiated</span>
+    </div>
+    <br>
+</div>
+<br>
+
+{% endblock %}
+
+{% block js_block %}
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    // go to report list
+    document.querySelector("#menu_cancel").onclick = function() {
+        window.close();
+        return false;
+    };   
+    myclient.setTotop();
+});    
+</script>
+{% endblock %}
